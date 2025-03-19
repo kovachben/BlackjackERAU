@@ -1,5 +1,5 @@
-#ifndef blackjack.h
-#define blackjack.h
+#ifndef blackjack_h
+#define blackjack_h
 
 struct deck
 {
@@ -10,15 +10,15 @@ struct deck
   int playerDrawn;
 };
 
-struct hand
-{
-  int totalValue;
-  struct deck playerCard[11]; // Maximum number of cards for a blackjack hand is 11
-  int cardCount;
-};
 
-void fillDeck(struct deck Deck);
+void fillDeck(struct deck Deck[]);
 
-void drawRandom(struct deck Deck, struct hand Hand, int playerNumber);
+void drawInitial(struct deck Deck[], int playerCount);
+
+void totalValueInitialize(int totalValue[], int playerCount);
+
+void bjValueCalculator(int totalValue[], struct deck Deck[], int playerCount);
+
+void playerPrompt(int totalValue[], int playerCount, struct deck Deck[]);
 
 #endif
