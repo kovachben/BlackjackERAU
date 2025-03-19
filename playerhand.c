@@ -49,11 +49,12 @@ void playerPrompt(int totalValue[], int playerCount, struct deck Deck[])
     {
       if (i == Deck[j].playerDrawn)
       {
-        printf("Card %d:\n%s of %s\n", cardNumber, Deck[i].card, Deck[i].suit);
+        printf("Card %d:\n%s of %s\n", cardNumber, Deck[j].card, Deck[j].suit);
         cardNumber++;
       }
     }
+    cardNumber = 1; 
       
-    printf("\nTotal blackjack value: %d", totalValue[i]);
+    printf("\nTotal blackjack value: %d\n", totalValue[i]);
   }
 }
