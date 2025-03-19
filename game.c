@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include "blackjack.h"
-
+#include <stdlib.h>
 /*
   File: game.c
   Author: Ben Kovach
   Assignment: Group Project
   Date: 3/18/2025
-  References:
+  References: Stack Overflow (dynamic memory allocation)
 */
 
 int main()
@@ -18,35 +18,37 @@ int main()
   printf("\nEnter number here: ");
   scanf("%d", &playerCount);
   
-  int totalValue[playerCount];
+  int* totalValue = (int*)calloc(playerCount, sizeof(int));
+  if (totalValue == NULL)
+  {
+    printf("Memory allocation failed.");
+    return 1;
+  }
   
   int gameStatus = 1;
   
   struct deck Deck[52];
   
-  while (gameStatus == 1); // Move to separate file
+  while (gameStatus == 1) // Move to separate file
   {
+    totalValueInitialize(totalValue, playerCount);
     fillDeck(Deck);
-    cardCountInitialize(Hand, playerCount);
     
-    for (i=0; i<playerCount; i++)
-    {
-      randomDraw(Deck, i);
-    }
+    drawInitial(Deck, playerCount);
+    bjValueCalculatorAll(totalValue, Deck, playerCount);
     
-    for (i=0; i<playerCount; i++)
-    {
-      randomDraw(Deck, i);
-    }
+    playerPrompt(totalValue, playerCount, Deck);
+
     
     
-    printPlayerHand(Deck, playerCount);
+    gameStatus = 0;
     
     
     
     
   }
-  
+  return 0;
+}
 
     
   
