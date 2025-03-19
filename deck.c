@@ -148,6 +148,29 @@ void fillDeck(struct deck Deck[])
   {
     Deck[i].drawn = 0; // Initialized all cards to not have been drawn
   }
+  
+  for (i = 0; i <= 51; i++) 
+  {
+    if (i % 4 == 0) 
+    {
+      strcpy(Deck[i].suit, "Diamonds");
+    } 
+    else if (i % 4 == 1) 
+    {
+      strcpy(Deck[i].suit, "Clubs");
+    } 
+    else if (i % 4 == 2) 
+    {
+      strcpy(Deck[i].suit, "Spades");
+    } 
+    else if (i % 4 == 3) 
+    {
+      strcpy(Deck[i].suit, "Hearts");
+    }
+  }
+  
+  
+  
 }
 
     
