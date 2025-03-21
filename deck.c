@@ -61,7 +61,7 @@ void fillDeck(struct deck Deck[])
   
   // Filling cards based on number/name 4 at a time
   
-  for (i=0; i<=3; i++) //0-3 is ace
+  for (i=0; i<=3; i++) //0-3 is King
   {
     strcpy(Deck[i].card, "Ace");
     Deck[i].bjValue = 11;
@@ -135,7 +135,7 @@ void fillDeck(struct deck Deck[])
   
   for (i=48; i<=51; i++)
   {
-    strcpy(Deck[i].card, "King"); // 48-51 is King
+    strcpy(Deck[i].card, "King"); // 48-51 is Ace
     Deck[i].bjValue = 10;
   }
   
@@ -168,9 +168,6 @@ void fillDeck(struct deck Deck[])
       strcpy(Deck[i].suit, "Hearts");
     }
   }
-  
-  
-  
 }
 
     
