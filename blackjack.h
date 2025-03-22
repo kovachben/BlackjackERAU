@@ -17,7 +17,7 @@ void drawInitial(struct deck Deck[], int playerCount);
 
 void totalValueInitialize(int totalValue[], int playerCount);
 
-void bjValueCalculator(int totalValue[], struct deck Deck[], int playerCount);
+void bjValueCalculatorAll(int totalValue[], struct deck Deck[], int playerCount);
 
 void playerPrompt(int totalValue[], int playerCount, struct deck Deck[]);
 

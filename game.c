@@ -38,7 +38,7 @@ int main()
     bjValueCalculatorAll(totalValue, Deck, playerCount);
     
     playerPrompt(totalValue, playerCount, Deck);
-
+    
     
     
     gameStatus = 0;
