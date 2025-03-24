@@ -21,4 +21,7 @@ void bjValueCalculatorAll(int totalValue[], struct deck Deck[], int playerCount)
 
 void playerPrompt(int totalValue[], int playerCount, struct deck Deck[]);
 
+void dealerInitial(struct deck Deck[]);
+
+void dealerCalculator(struct deck Deck[], int dealerValue);
 #endif
