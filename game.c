@@ -12,12 +12,14 @@
 int main()
 {
   int playerCount, i;
+  int dealerValue; 
   
   printf("------ Welcome to Blackjack ------\n");
   printf("\n\n\nHow many players are there (1-4)?");
   printf("\nEnter number here: ");
   scanf("%d", &playerCount);
   
+  // preallocating memory for totalValue array as number of players is unknown.
   int* totalValue = (int*)calloc(playerCount, sizeof(int));
   if (totalValue == NULL)
   {
@@ -34,18 +36,14 @@ int main()
     totalValueInitialize(totalValue, playerCount);
     fillDeck(Deck);
     
+    dealerInitial(Deck);
+    dealerCalculator(Deck, dealerValue);
     drawInitial(Deck, playerCount);
     bjValueCalculatorAll(totalValue, Deck, playerCount);
     
     playerPrompt(totalValue, playerCount, Deck);
     
-    
-    
     gameStatus = 0;
-    
-    
-    
-    
   }
   return 0;
 }
