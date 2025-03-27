@@ -10,6 +10,37 @@
    References:
 */
 
+int doubleDown(float bets[2][4], struct deck Deck[], int playerNumber, int totalValue[])
+{
+  int done;
+  if (bets[0][playerNumber] > bets[1][playerNumber])
+  {
+    printf("\nNot enough money to double down.");
+    done = 0;
+    return done;
+  } 
+  drawRandom(Deck, playerNumber);
+  bjValueCalculator(totalValue, Deck, playerNumber); 
+  bets[1][playerNumber] = bets[1][playerNumber] - bets[0][playerNumber];
+  bets[0][playerNumber] = bets[0][playerNumber] * 2;
+  int i;
+  int cardNumber = 1;
+  printf("Player %d doubles down!\n", playerNumber+1);
+  printf("New Bet: $%.2f\n\n", bets[0][playerNumber]);
+  printf("New Hand:\n");
+  for (i=0; i<52; i++)
+  {
+    if (Deck[i].playerDrawn == playerNumber)
+    {
+      printf("\nCard %d: %s of %s", cardNumber, Deck[i].card, Deck[i].suit);
+      cardNumber++;
+    }
+  }
+  printf("\nNew hand value: %d", totalValue[playerNumber]);
+  done = 1;
+  return done;
+}
+  
 void hit(int totalValue[], struct deck Deck[], int playerNumber)
 {
   int cardNumber = 1;
@@ -30,14 +61,14 @@ void hit(int totalValue[], struct deck Deck[], int playerNumber)
   cardNumber = 1; // resetting card value for next player
 }
 
-void split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[])
+int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[], float bets[2][4], int splitNumber, int splitCheck[])
 {
+  int over;
   char strc1[25];
   char strc2[25];
   int i, choice, j, done;
   int check = 0;
   int cardNumber = 2;
-
   // Finding the two cards in the player's hand
   for (i = 0; i < 52; i++) 
   {
@@ -59,20 +90,29 @@ void split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand
   // Ensuring the player can split
   if (strcmp(strc1, strc2) != 0) 
   {
-    printf("Your hand is not eligible for a split.\n");
-    return;
+    printf("\nYour hand is not eligible for a split.\n");
+    over = 0;
+    return over;
   }
-
+  if (bets[0][playerNumber] > bets[1][playerNumber])
+  {
+    printf("\nNot enough money to split.");
+    over = 0;
+    return over;
+  } 
   // Resetting split hands (for calculating value if two players split)
   for (i = 0; i < 6; i++) 
   {
     splitHand[i] = 0;
   }
-
+  bets[1][playerNumber] = bets[1][playerNumber] - bets[0][playerNumber];
+  bets[0][playerNumber] = bets[0][playerNumber] * 2;
+  splitCheck[playerNumber] = 1;
   // Setting initial values for hands
-  splitHand[4] = totalValue[playerNumber] / 2;
-  splitHand[5] = totalValue[playerNumber] / 2;
-
+  splitHand[splitNumber] = totalValue[playerNumber] / 2;
+  splitHand[splitNumber + 1] = totalValue[playerNumber] / 2;
+  
+  ///////////////////////////totalValue[playerNumber] = splitNumber;
   // Assigning one card to each split hand
   int firstCard = 1;
   for (i = 0; i < 52; i++) 
@@ -81,23 +121,23 @@ void split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand
     {
       if (firstCard) 
       {
-        Deck[i].playerDrawn = 4; // first split hand
+        Deck[i].playerDrawn = splitNumber; // first split hand
         firstCard = 0;
       } 
       else 
       {
-        Deck[i].playerDrawn = 5; //second split hand
+        Deck[i].playerDrawn = splitNumber + 1; //second split hand
         break;
       }
     }
   }
   // printing initial split hand
-  for (i = 4; i < 6; i++) 
+  for (i = splitNumber; i <= splitNumber + 1; i++) 
   {
     done = 0;
     while (done == 0) 
     {
-      printf("\nHand %d:\nValue: %d\n", (i - 3), splitHand[i]);
+      printf("\nHand %d:\nValue: %d\n", (i - 4), splitHand[i]);
       cardNumber = 1;
       for (j = 0; j < 52; j++) 
       {
@@ -110,7 +150,8 @@ void split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand
       printf("Would you like to...\n");
       printf("1) Hit\n2) Stand\n");
       printf("Enter selection here: ");
-      if (scanf("%d", &choice) != 1) 
+      scanf("%d", &choice);
+      /*\\if (scanf("%d", &choice) != 1) 
       {
         printf("Invalid input. Please enter 1 or 2.\n");
         while (getchar() != '\n');
@@ -118,6 +159,7 @@ void split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand
         continue; // idk if thats right 
         }
       }
+      */
       switch (choice) 
       {
         case 1:
@@ -132,7 +174,7 @@ void split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand
             }
             if (splitHand[i] > 21) 
             {
-              printf("Bust! Value: %d\n", splitHand[i]);
+              printf("Player %d, hand %d has busted! Value: %d\n", playerNumber+1, i - 3, splitHand[i]);
               done = 1;
             }
           break;
@@ -145,15 +187,21 @@ void split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand
       }
     }
   }
+  over = 1;
+  return over;
 }
    
-void playOptions(int playerNumber, int totalValue[], struct deck Deck[])
+void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float bets[2][4], int splitHand[], int splitCheck[])
 {
   int choice, i;
   int done = 0;
-  int splitHand[6];
+  int splitNumber = 5;
   while (done == 0)
   {
+    if (totalValue[playerNumber] > 21)
+    {
+      done = 1;
+    }
     printf("\n\nWould you like to...");
     printf("\n\n1) Hit\n2) Stand\n3) Double Down\n4) Split");
     printf("\nEnter your selection: ");
@@ -162,28 +210,33 @@ void playOptions(int playerNumber, int totalValue[], struct deck Deck[])
     {
       case 1: // hit
         hit(totalValue, Deck, playerNumber);
-        
         break; 
       case 2: // Stand
         done = 1; 
         break; 
       case 3: // Double down
-        drawRandom(Deck, playerNumber);
-        bjValueCalculator(totalValue, Deck, playerNumber); 
-        done = 1;
+        done = doubleDown(bets, Deck, playerNumber, totalValue);
         break; 
       case 4: 
-        split(playerNumber, totalValue, Deck, splitHand);
-        done = 1;
+        done = split(playerNumber, totalValue, Deck, splitHand, bets, splitNumber, splitCheck);
+        splitNumber += 2;
         break; 
       default: 
         printf("Please enter a number between 1 and 4");
         scanf("%d",&choice); // ERROR CHECK
-    } 
+    }
+    if (totalValue[playerNumber] > 21)
+    {
+      done = 1;
+    }
+  }
+  if (totalValue[playerNumber] > 21)
+  {
+    printf("\n\nPlayer %d has busted. You lose $%.2f", playerNumber + 1, bets[0][playerNumber]);
   }
 }
       
-void playerPrompt(int totalValue[], int playerCount, struct deck Deck[])
+void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float bets[2][4], int splitHand[], int splitCheck[])
 {
   int i, j;
   int cardNumber = 1;
@@ -201,8 +254,6 @@ void playerPrompt(int totalValue[], int playerCount, struct deck Deck[])
     }
     cardNumber = 1;  
     printf("\nTotal blackjack value: %d\n", totalValue[i]);
-    playOptions(i, totalValue, Deck);
+    playOptions(i, totalValue, Deck, bets, splitHand, splitCheck);
   }
 }
-
-

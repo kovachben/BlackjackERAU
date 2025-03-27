@@ -124,7 +124,7 @@ void fillDeck(struct deck Deck[])
   }
   for (i=0; i<=51; i++)
   {
-    Deck[i].playerDrawn = 200;// Set to a number that will never equal the player count
+    Deck[i].playerDrawn = 19;// Set to a number that will never equal the player count
   }
   for (i=0; i<=51; i++)
   {
