@@ -20,7 +20,7 @@ int doubleDown(float bets[2][4], struct deck Deck[], int playerNumber, int total
     return done;
   } 
   drawRandom(Deck, playerNumber);
-  bjValueCalculator(totalValue, Deck, playerNumber); 
+  handValueCalculator(totalValue, Deck, playerNumber); 
   bets[1][playerNumber] = bets[1][playerNumber] - bets[0][playerNumber];
   bets[0][playerNumber] = bets[0][playerNumber] * 2;
   int i;
@@ -46,7 +46,7 @@ void hit(int totalValue[], struct deck Deck[], int playerNumber)
   int cardNumber = 1;
   int i;
   drawRandom(Deck, playerNumber); // draws card
-  bjValueCalculator(totalValue, Deck, playerNumber); //Calculates new hand value
+  handValueCalculator(totalValue, Deck, playerNumber); //Calculates new hand value
         
   printf("\nNew Hand:\n\n");
   for (i=0; i<52; i++)
@@ -151,15 +151,15 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
       printf("1) Hit\n2) Stand\n");
       printf("Enter selection here: ");
       scanf("%d", &choice);
-      /*\\if (scanf("%d", &choice) != 1) 
+      if (scanf("%d", &choice) != 1) 
       {
         printf("Invalid input. Please enter 1 or 2.\n");
         while (getchar() != '\n');
         {
-        continue; // idk if thats right 
+        continue; // idk if thats right  - error check
         }
       }
-      */
+    
       switch (choice) 
       {
         case 1:
@@ -169,7 +169,7 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
             {
               if (Deck[j].playerDrawn == i) 
               {
-                splitHand[i] += Deck[j].bjValue;
+                splitHand[i] += Deck[j].handValue;
               }
             }
             if (splitHand[i] > 21) 
@@ -194,6 +194,7 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
 void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float bets[2][4], int splitHand[], int splitCheck[])
 {
   int choice, i;
+  int check = 0; 
   int done = 0;
   int splitNumber = 5;
   while (done == 0)
@@ -204,9 +205,24 @@ void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float b
     }
     printf("\n\nWould you like to...");
     printf("\n\n1) Hit\n2) Stand\n3) Double Down\n4) Split");
-    printf("\nEnter your selection: ");
-    scanf("%d", &choice);
-    switch (choice) // DO ERROR CHECKING
+    printf("\nEnter your selection: ");    
+    while (check != 1)
+    {
+      if (scanf("%d", &choice) != 1)
+      { 
+        printf("\nPlease enter a number between 1 and 4: "); // check for valid input
+        while(getchar() != '\n');
+      } 
+      else if (playerCount < 1 || playerCount > 4) // ensure number is within bounds
+      {
+        printf("Please enter a number between 1 and 4.\n"); 
+      }
+      else
+      {
+        check = 1; 
+      } 
+    }
+    switch (choice)
     {
       case 1: // hit
         hit(totalValue, Deck, playerNumber);
@@ -222,8 +238,7 @@ void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float b
         splitNumber += 2;
         break; 
       default: 
-        printf("Please enter a number between 1 and 4");
-        scanf("%d",&choice); // ERROR CHECK
+        printf("Please enter a number between 1 and 4: ");
     }
     if (totalValue[playerNumber] > 21)
     {
@@ -253,7 +268,7 @@ void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float b
       }
     }
     cardNumber = 1;  
-    printf("\nTotal blackjack value: %d\n", totalValue[i]);
+    printf("\nTotal hand value: %d\n", totalValue[i]);
     playOptions(i, totalValue, Deck, bets, splitHand, splitCheck);
   }
 }

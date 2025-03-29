@@ -6,7 +6,7 @@
   Author: Ben Kovach
   Assignment: Group Project
   Date: 3/18/2025
-  References: Stack Overflow (dynamic memory allocation)
+  References: Stack Overflow (dynamic memory allocation), getchar
 */
 
 int main()
@@ -16,6 +16,7 @@ int main()
   float bets[2][4];
   int splitHand[12];
   int splitCheck[4];
+  int check = 0; 
   for (i=0; i<4; i++)
   {
     splitCheck[i] = 0;
@@ -26,9 +27,24 @@ int main()
   }
   int gameCount = 0;
   printf("|----- Welcome to Blackjack -----|");
-  printf("\n\n\nHow many players are there (1-4)?");
+  printf("\n\n\nHow many players are there (1-4)?"); //ERROR CHECK COMPLETE
   printf("\nEnter number here: ");
-  scanf("%d", &playerCount);
+  while (check != 1)
+  {
+    if (scanf("%d", &playerCount) != 1)
+    { 
+      printf("Please enter a number between 1 and 4.\n"); // check for valid input
+      while(getchar() != '\n');
+    } 
+    else if (playerCount < 1 || playerCount > 4) // ensure number is within bounds
+    {
+      printf("Please enter a number between 1 and 4.\n"); 
+    }
+    else
+    {
+      check = 1; 
+    } 
+  }
   // preallocating memory for totalValue array as number of players is unknown.
   int* totalValue = (int*)calloc(playerCount, sizeof(int));
   if (totalValue == NULL)
@@ -46,13 +62,14 @@ int main()
     fillDeck(Deck);
     dealerInitial(Deck);
     drawInitial(Deck, playerCount);
-    bjValueCalculatorAll(totalValue, Deck, playerCount);
+    handValueCalculatorAll(totalValue, Deck, playerCount);
     playerPrompt(totalValue, playerCount, Deck, bets, splitHand, splitCheck);
     dealerAction(Deck, dealerValue);
     dealerValue = dealerCalculator(Deck, dealerValue);
     gameEnd(totalValue, bets, dealerValue, playerCount, splitHand, splitCheck);
     gameStatus = nextGame(gameCount, bets, playerCount);
   }
+  free(totalValue); 
   return 0;
 }
 

@@ -8,7 +8,7 @@
    Date: 03/19/2025
    References:
 */
-void bjValueCalculatorAll(int totalValue[], struct deck Deck[], int playerCount) 
+void handValueCalculatorAll(int totalValue[], struct deck Deck[], int playerCount) 
 // Calculates the blackjack value for every hand
 {
   int i, j;
@@ -23,16 +23,16 @@ void bjValueCalculatorAll(int totalValue[], struct deck Deck[], int playerCount)
     {
       if (Deck[j].playerDrawn == i)
       {  
-        totalValue[i] = totalValue[i] + Deck[j].bjValue;
+        totalValue[i] = totalValue[i] + Deck[j].handValue;
       }
-      if (i<=3 && Deck[j].bjValue > 21)
+      if (i<=3 && Deck[j].handValue > 21)
       {
         totalValue[i] = totalValue[i] - 10;
       }
     }
   }
 }
-void bjValueCalculator(int totalValue[], struct deck Deck[], int playerNumber) 
+void handValueCalculator(int totalValue[], struct deck Deck[], int playerNumber) 
 // calculates the value of a single hand
 {
   int i;
@@ -42,7 +42,7 @@ void bjValueCalculator(int totalValue[], struct deck Deck[], int playerNumber)
   {
     if (Deck[i].playerDrawn == playerNumber)
     {
-      totalValue[playerNumber] = totalValue[playerNumber] + Deck[i].bjValue;
+      totalValue[playerNumber] = totalValue[playerNumber] + Deck[i].handValue;
       if (i<=3 && totalValue[playerNumber] > 21) // ace logic (EXPLAIN MORE)
       {
         totalValue[playerNumber] = totalValue[playerNumber] - 10;
@@ -50,9 +50,10 @@ void bjValueCalculator(int totalValue[], struct deck Deck[], int playerNumber)
     }
   }
 }
-void giveMoney(float bets[2][4], int playerCount)
+void giveMoney(float bets[2][4], int playerCount) // NEED BETTER NAME 
 {
   int i;
+  int check = 0; 
   for (i=0; i<playerCount; i++)
   {
     bets[0][i] = 0;
@@ -60,13 +61,26 @@ void giveMoney(float bets[2][4], int playerCount)
   }
   for (i=0; i<playerCount; i++)
   { 
-    printf("\n\nPlayer %d, how much money do you have? $", i + 1);
-    scanf("%f", &bets[1][i]);
+    check = 0;
+    while (check != 1)
+    {
+      printf("\n\nPlayer %d, how much money do you have? $", i + 1);
+      if (scanf("%f", &bets[1][i]) != 1)
+      {
+        printf("\nPlease enter a number."); // Check for valid input.
+        while(getchar() != '\n');
+      }
+      else
+      {
+        check = 1; 
+      }
+    }
   }
 }
 void placeBets(float bets[2][4], int playerCount)
 {
   int i;
+  int check = 0;
   for (i=0; i<playerCount; i++)
   {
     bets[0][i] = 0;
@@ -76,9 +90,21 @@ void placeBets(float bets[2][4], int playerCount)
     int enough = 0;
     while (enough == 0)
     {
+      check = 0; 
       printf("\n\nPlayer %d, place your bet: $", i + 1);
-      scanf("%f", &bets[0][i]);
-      if (bets[0][i] > bets[1][i])
+      while (check != 1)
+      {
+        if (scanf("%f", &bets[0][i]) != 1)
+        {
+          printf("\nPlease enter a number:"); // Check for valid input.
+          while(getchar() != '\n');
+        }
+        else
+        {
+          check = 1; 
+        }
+      }
+      if (bets[0][i] > bets[1][i]) // Check for valid bet amount.
       {
         printf("Not enough money to place bet. You only have $%.2f", bets[1][i]);
       }

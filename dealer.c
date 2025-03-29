@@ -36,7 +36,7 @@ int dealerCalculator(struct deck Deck[], int dealerValue)
   {
     if (Deck[i].playerDrawn >= 20)
     {
-      dealerValue = Deck[i].bjValue + dealerValue;
+      dealerValue = Deck[i].handValue + dealerValue;
       if (i<=3 && dealerValue > 21)
       {
         dealerValue = dealerValue - 10;

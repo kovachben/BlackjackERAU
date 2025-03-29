@@ -5,7 +5,7 @@
    Author: Sophia Noriega, Ben Kovach
    Assignment: Deck
    Date: 03/19/2025
-   References:
+   References: getchar - Stack Overflow
 */
 
 void splitGameEnd(float bets[2][4], int dealerValue, int playerNumber, int splitHand[], int splitCheck[], int splitNumber)
@@ -28,7 +28,7 @@ void splitGameEnd(float bets[2][4], int dealerValue, int playerNumber, int split
         }
         else
         {
-          printf("\n\nCongradulations player %d! Hand %d wins $%.2f", playerNumber+1, j, bets[0][playerNumber] / 2);
+          printf("\n\nCongratulations player %d! Hand %d wins $%.2f", playerNumber+1, j, bets[0][playerNumber] / 2);
           bets[1][playerNumber] = bets[1][playerNumber] + bets[0][playerNumber];
           end = 1;
         }
@@ -41,7 +41,7 @@ void splitGameEnd(float bets[2][4], int dealerValue, int playerNumber, int split
       }  
       if (dealerValue > 21 && splitHand[i] <= 21)
       {
-        printf("\n\nCongradulations player %d! Hand %d wins $%.2f", playerNumber+1, j, bets[0][playerNumber] / 2);
+        printf("\n\nCongratulations player %d! Hand %d wins $%.2f", playerNumber+1, j, bets[0][playerNumber] / 2);
         bets[1][playerNumber] = bets[1][playerNumber] + bets[0][playerNumber];
         end = 1;
       }
@@ -74,12 +74,12 @@ void gameEnd(int totalValue[], float bets[2][4], int dealerValue, int playerCoun
           if (totalValue[i] == 21)
           {
             printf("\n\nBlackjack for player %d! You win $%.2f", i+1, bets[0][i] * 1.5);
-            bets[1][i] = bets[1][i] + 1.5 * bets[0][i];
+            bets[1][i] = bets[1][i] + 1.5 * bets[0][i] + bets[0][i]; // confirm correct
             end = 1;
           }
           else
           {
-            printf("\n\nCongradulations player %d! You win $%.2f", i+1, bets[0][i]);
+            printf("\n\nCongratulations player %d! You win $%.2f", i+1, bets[0][i]);
             bets[1][i] = bets[1][i] + 2 * bets[0][i];
             end = 1;
           }
@@ -92,7 +92,7 @@ void gameEnd(int totalValue[], float bets[2][4], int dealerValue, int playerCoun
         }
         if (dealerValue > 21 && totalValue[i] <= 21)
         {
-          printf("\n\nCongradulations player %d! You win $%.2f", i+1, bets[0][i]);
+          printf("\n\nCongratulations player %d! You win $%.2f", i+1, bets[0][i]);
           bets[1][i] = bets[1][i] + 2 * bets[0][i];
           end = 1;
         }
@@ -117,22 +117,36 @@ void gameEnd(int totalValue[], float bets[2][4], int dealerValue, int playerCoun
 }
 
 
-int nextGame(int gameCount, float bets[2][4], int playerCount)
+int nextGame(int gameCount, float bets[2][4], int playerCount) 
 {
-  int choice, gameStatus, i;
-  printf("\n\nGame %d complete:\n\n", gameCount);
+  int choice, gameStatus, i, check;
+  printf("\n\nGame %d complete:\n\n", gameCount); 
   for (i=0; i<playerCount; i++)
   {
     printf("\nPlayer %d's balance: $%.2f", i+1, bets[1][i]);
   }
-  printf("\n\nSelect an option below:\n");
-  printf("1)Play again\n2)Quit\nEnter choice here: ");
-  scanf("%d", &choice);
-  if (choice == 1)
+  do
+  {
+    printf("\n\nSelect an option below:\n");
+    printf("1)Play again\n2)Quit\nEnter choice here: ");
+    check = scanf("%d", &choice);
+    if (check != 1) // checking for invalid inputs
+    {
+      printf("Please enter a valid number:\n");
+      while (getchar() != '\n');
+    }
+    else if (choice != 1 && choice != 2) 
+        {
+            printf("Invalid choice! Please enter 1 to play again or 2 to quit.\n");
+        }
+  }
+  while (check != 1 || (choice != 1 && choice != 2));
+  
+  if (choice == 1) // go again
   {
     gameStatus = 1;
   }
-  if (choice == 2)
+  if (choice == 2) // quit game
   {
     gameStatus = 0;
   }

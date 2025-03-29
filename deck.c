@@ -60,67 +60,67 @@ void fillDeck(struct deck Deck[])
   for (i=0; i<=3; i++) //0-3 is ace
   {
     strcpy(Deck[i].card, "Ace");
-    Deck[i].bjValue = 11;
+    Deck[i].handValue = 11;
   }
   for (i=4; i<=7; i++) //4-7 is two
   {
     strcpy(Deck[i].card, "Two");
-    Deck[i].bjValue = 2;
+    Deck[i].handValue = 2;
   }
   for (i=8; i<=11; i++) // 8-11 is three
   {
     strcpy(Deck[i].card, "Three");
-    Deck[i].bjValue = 3;
+    Deck[i].handValue = 3;
   }
   for (i=12; i<=15; i++)
   {
     strcpy(Deck[i].card, "Four"); // 12-15 is four
-    Deck[i].bjValue = 4;
+    Deck[i].handValue = 4;
   }
   for (i=16; i<=19; i++)
   {
     strcpy(Deck[i].card, "Five"); // 16-19 is five
-    Deck[i].bjValue = 5;
+    Deck[i].handValue = 5;
   }
   for (i=20; i<=23; i++)
   {
     strcpy(Deck[i].card, "Six"); // 20-23 is Six
-    Deck[i].bjValue = 6;
+    Deck[i].handValue = 6;
   }
   for (i=24; i<=27; i++)
   {
     strcpy(Deck[i].card, "Seven"); // 24-27 is seven
-    Deck[i].bjValue = 7;
+    Deck[i].handValue = 7;
   }
   for (i=28; i<=31; i++)
   {
     strcpy(Deck[i].card, "Eight"); // 28-31 is Eight
-    Deck[i].bjValue = 8;
+    Deck[i].handValue = 8;
   }
   for (i=32; i<=35; i++)
   {
     strcpy(Deck[i].card, "Nine"); // 32-35 is nine
-    Deck[i].bjValue = 9;
+    Deck[i].handValue = 9;
   }
   for (i=36; i<=39; i++)
   {
     strcpy(Deck[i].card, "Ten"); // 36-39 is ten
-    Deck[i].bjValue = 10;
+    Deck[i].handValue = 10;
   }
   for (i=40; i<=43; i++)
   {
     strcpy(Deck[i].card, "Jack"); // 40-43 is Jack
-    Deck[i].bjValue = 10;
+    Deck[i].handValue = 10;
   }
   for (i=44; i<=47; i++)
   {
     strcpy(Deck[i].card, "Queen"); // 44-47 is Queen
-    Deck[i].bjValue = 10;
+    Deck[i].handValue = 10;
   }
   for (i=48; i<=51; i++)
   {
     strcpy(Deck[i].card, "King"); // 48-51 is King
-    Deck[i].bjValue = 10;
+    Deck[i].handValue = 10;
   }
   for (i=0; i<=51; i++)
   {
