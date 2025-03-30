@@ -50,7 +50,7 @@ void handValueCalculator(int totalValue[], struct deck Deck[], int playerNumber)
     }
   }
 }
-void giveMoney(float bets[2][4], int playerCount) // NEED BETTER NAME 
+void initializeMoney(float bets[2][4], int playerCount) // NEED BETTER NAME 
 {
   int i;
   int check = 0; 
@@ -77,7 +77,7 @@ void giveMoney(float bets[2][4], int playerCount) // NEED BETTER NAME
     }
   }
 }
-void placeBets(float bets[2][4], int playerCount)
+void placeBets(float bets[2][MAX_PLAYERS], int playerCount)
 {
   int i;
   int check = 0;

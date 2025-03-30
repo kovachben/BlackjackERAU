@@ -8,7 +8,7 @@
    References: getchar - Stack Overflow
 */
 
-void splitGameEnd(float bets[2][4], int dealerValue, int playerNumber, int splitHand[], int splitCheck[], int splitNumber)
+void splitGameEnd(float bets[2][MAX_PLAYERS], int dealerValue, int playerNumber, int splitHand[], int splitCheck[], int splitNumber)
 {
   int i;
   int j=0;
@@ -58,7 +58,7 @@ void splitGameEnd(float bets[2][4], int dealerValue, int playerNumber, int split
   }
 }
 
-void gameEnd(int totalValue[], float bets[2][4], int dealerValue, int playerCount, int splitHand[], int splitCheck[])
+void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[])
 {
   int i;
   int splitNumber = 5;
@@ -117,7 +117,7 @@ void gameEnd(int totalValue[], float bets[2][4], int dealerValue, int playerCoun
 }
 
 
-int nextGame(int gameCount, float bets[2][4], int playerCount) 
+int nextGame(int gameCount, float bets[2][MAX_PLAYERS], int playerCount) 
 {
   int choice, gameStatus, i, check;
   printf("\n\nGame %d complete:\n\n", gameCount); 

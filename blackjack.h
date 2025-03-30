@@ -1,6 +1,7 @@
 #ifndef BLACKJACK_H
 #define BLACKJACK_H
 
+#define MAX_PLAYERS 4
 /*
    File : dealer.c
    Author: Ben Kovach
@@ -18,7 +19,7 @@ struct deck
   int playerDrawn;
 };
 
-void giveMoney(float bets[2][4], int playerCount);
+void initializeMoney(float bets[2][MAX_PLAYERS], int playerCount);
 
 void fillDeck(struct deck Deck[]);
 
@@ -26,16 +27,16 @@ void drawInitial(struct deck Deck[], int playerCount);
 
 void handValueCalculatorAll(int totalValue[], struct deck Deck[], int playerCount);
 
-void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float bets[2][4], int splitHand[], int splitCheck[]);
+void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float bets[2][MAX_PLAYERS], int splitHand[], int splitCheck[]);
 
 void dealerInitial(struct deck Deck[]);
 
 void dealerAction(struct deck Deck[], int dealerValue);
 
-void placeBets(float bets[2][4], int playerCount);
+void placeBets(float bets[2][MAX_PLAYERS], int playerCount);
 
-void gameEnd(int totalValue[], float bets[2][4], int dealerValue, int playerCount, int splitHand[], int splitCheck[]);
+void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[]);
 
-int nextGame(int gameCount, float bets[2][4], int playerCount);
+int nextGame(int gameCount, float bets[2][MAX_PLAYERS], int playerCount);
 
 #endif

@@ -6,18 +6,18 @@
   Author: Ben Kovach
   Assignment: Group Project
   Date: 3/18/2025
-  References: Stack Overflow (dynamic memory allocation), getchar
+  References: Stack Overflow getchar
 */
 
 int main()
 {
   int playerCount, i;
   int dealerValue;
-  float bets[2][4];
+  float bets[2][MAX_PLAYERS];
   int splitHand[12];
-  int splitCheck[4];
+  int splitCheck[MAX_PLAYERS];
   int check = 0; 
-  for (i=0; i<4; i++)
+  for (i=0; i<MAX_PLAYERS; i++)
   {
     splitCheck[i] = 0;
   }
@@ -33,28 +33,22 @@ int main()
   {
     if (scanf("%d", &playerCount) != 1)
     { 
-      printf("Please enter a number between 1 and 4.\n"); // check for valid input
+      printf("Please enter a number between 1 and 4: "); // check for valid input
       while(getchar() != '\n');
     } 
-    else if (playerCount < 1 || playerCount > 4) // ensure number is within bounds
+    else if (playerCount < 1 || playerCount > MAX_PLAYERS) // ensure number is within bounds
     {
-      printf("Please enter a number between 1 and 4.\n"); 
+      printf("Please enter a number between 1 and 4: "); 
     }
     else
     {
       check = 1; 
     } 
   }
-  // preallocating memory for totalValue array as number of players is unknown.
-  int* totalValue = (int*)calloc(playerCount, sizeof(int));
-  if (totalValue == NULL)
-  {
-    printf("Memory allocation failed.");
-    return 1;
-  }
+  int totalValue[MAX_PLAYERS];
   int gameStatus = 1;
   struct deck Deck[52];
-  giveMoney(bets, playerCount);
+  initializeMoney(bets, playerCount);
   while (gameStatus == 1) // Move to separate file
   {
     gameCount++;
@@ -69,7 +63,6 @@ int main()
     gameEnd(totalValue, bets, dealerValue, playerCount, splitHand, splitCheck);
     gameStatus = nextGame(gameCount, bets, playerCount);
   }
-  free(totalValue); 
   return 0;
 }
 

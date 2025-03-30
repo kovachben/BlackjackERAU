@@ -10,7 +10,7 @@
    References:
 */
 
-int doubleDown(float bets[2][4], struct deck Deck[], int playerNumber, int totalValue[])
+int doubleDown(float bets[2][MAX_PLAYERS], struct deck Deck[], int playerNumber, int totalValue[])
 {
   int done;
   if (bets[0][playerNumber] > bets[1][playerNumber])
@@ -61,7 +61,7 @@ void hit(int totalValue[], struct deck Deck[], int playerNumber)
   cardNumber = 1; // resetting card value for next player
 }
 
-int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[], float bets[2][4], int splitNumber, int splitCheck[])
+int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[], float bets[2][MAX_PLAYERS], int splitNumber, int splitCheck[])
 {
   int over;
   char strc1[25];
@@ -191,7 +191,7 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
   return over;
 }
    
-void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float bets[2][4], int splitHand[], int splitCheck[])
+void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float bets[2][MAX_PLAYERS], int splitHand[], int splitCheck[])
 {
   int choice, i;
   int check = 0; 
@@ -213,7 +213,7 @@ void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float b
         printf("\nPlease enter a number between 1 and 4: "); // check for valid input
         while(getchar() != '\n');
       } 
-      else if (playerCount < 1 || playerCount > 4) // ensure number is within bounds
+      else if (choice < 1 || choice > 4) // ensure number is within bounds
       {
         printf("Please enter a number between 1 and 4.\n"); 
       }
@@ -251,7 +251,7 @@ void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float b
   }
 }
       
-void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float bets[2][4], int splitHand[], int splitCheck[])
+void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float bets[2][MAX_PLAYERS], int splitHand[], int splitCheck[])
 {
   int i, j;
   int cardNumber = 1;
