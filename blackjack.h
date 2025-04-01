@@ -35,7 +35,7 @@ void dealerAction(struct deck Deck[], int dealerValue);
 
 void placeBets(float bets[2][MAX_PLAYERS], int playerCount);
 
-void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[]);
+void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[], int gameCount);
 
 int nextGame(int gameCount, float bets[2][MAX_PLAYERS], int playerCount);
 

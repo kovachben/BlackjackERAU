@@ -193,12 +193,12 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
    
 void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float bets[2][MAX_PLAYERS], int splitHand[], int splitCheck[])
 {
-  int choice, i;
-  int check = 0; 
+  int choice, i; 
   int done = 0;
   int splitNumber = 5;
   while (done == 0)
   {
+    int check = 0;
     if (totalValue[playerNumber] > 21)
     {
       done = 1;

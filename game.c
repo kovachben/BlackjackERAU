@@ -60,7 +60,7 @@ int main()
     playerPrompt(totalValue, playerCount, Deck, bets, splitHand, splitCheck);
     dealerAction(Deck, dealerValue);
     dealerValue = dealerCalculator(Deck, dealerValue);
-    gameEnd(totalValue, bets, dealerValue, playerCount, splitHand, splitCheck);
+    gameEnd(totalValue, bets, dealerValue, playerCount, splitHand, splitCheck, gameCount);
     gameStatus = nextGame(gameCount, bets, playerCount);
   }
   return 0;

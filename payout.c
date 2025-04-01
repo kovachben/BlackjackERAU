@@ -18,7 +18,7 @@ void splitGameEnd(float bets[2][MAX_PLAYERS], int dealerValue, int playerNumber,
     int end = 0;
     while (end == 0)
     {
-      if (splitHand[i] > dealerValue && splitHand[i] <= 21)
+      if (splitHand[i] > dealerValue && splitHand[i] <= 21 || dealerValue > 21 && splitHand[i] == 21)
       {
         if (splitHand[i] == 21)
         {
@@ -57,8 +57,31 @@ void splitGameEnd(float bets[2][MAX_PLAYERS], int dealerValue, int playerNumber,
     }
   }
 }
-
-void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[])
+void printReceipt(float bets[2][MAX_PLAYERS], int playerNumber, int gameCount)
+{
+  FILE *filePointer = NULL;
+  if (gameCount == 1 && playerNumber == 0)
+  {
+    filePointer = fopen("receipt.txt", "w");
+    if (filePointer == NULL)
+    {
+      printf("Error opening file!\n");
+      return;
+    }
+    fclose(filePointer);
+    filePointer = NULL;
+  }
+  filePointer = fopen("receipt.txt", "a");
+  if (filePointer == NULL)
+  {
+    printf("Error opening file!\n");
+    return;
+  }
+  fprintf(filePointer, "Game %d: Player %d's Balance: $%.2f\n", gameCount, playerNumber, bets[1][playerNumber]);
+  fclose(filePointer);
+  return;
+}
+void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[], int gameCount)
 {
   int i;
   int splitNumber = 5;
@@ -69,7 +92,7 @@ void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int 
     {
       if (splitCheck[i] == 0)
       {
-        if (totalValue[i] > dealerValue && totalValue[i] <= 21)
+        if (totalValue[i] > dealerValue && totalValue[i] <= 21 || dealerValue > 21 && totalValue[i] == 21)
         {
           if (totalValue[i] == 21)
           {
@@ -111,11 +134,11 @@ void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int 
         splitGameEnd(bets, dealerValue, i, splitHand, splitCheck, splitNumber);
         splitNumber += 2; 
         end = 1;
-      } 
+      }
+      printReceipt(bets, i, gameCount);
     }
   }
 }
-
 
 int nextGame(int gameCount, float bets[2][MAX_PLAYERS], int playerCount) 
 {
