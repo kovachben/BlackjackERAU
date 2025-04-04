@@ -87,7 +87,6 @@ void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int 
   int splitNumber = 5;
   for (i=0; i<playerCount; i++)
   {
-    int end = 0;
     while (end == 0)
     {
       if (splitCheck[i] == 0)
@@ -98,42 +97,42 @@ void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int 
           {
             printf("\n\nBlackjack for player %d! You win $%.2f", i+1, bets[0][i] * 1.5);
             bets[1][i] = bets[1][i] + 1.5 * bets[0][i] + bets[0][i]; // confirm correct
-            end = 1;
+            continue;
           }
           else
           {
             printf("\n\nCongratulations player %d! You win $%.2f", i+1, bets[0][i]);
             bets[1][i] = bets[1][i] + 2 * bets[0][i];
-            end = 1;
+            continue;
           }
         }
         if (totalValue[i] == dealerValue)
         {
           printf("\n\nPush! Your bet of $%.2f is returned.", bets[0][i]);
           bets[1][i] = bets[1][i] + bets[0][i];
-          end = 1;
+          continue;
         }
         if (dealerValue > 21 && totalValue[i] <= 21)
         {
           printf("\n\nCongratulations player %d! You win $%.2f", i+1, bets[0][i]);
           bets[1][i] = bets[1][i] + 2 * bets[0][i];
-          end = 1;
+          continue;
         }
         if (totalValue[i] > 21)
         {
-          end = 1;
+          continue;
         }
         if (dealerValue > totalValue[i] && dealerValue <= 21)
         {
           printf("\n\nPlayer %d looses. $%.2f lost.", i+1, bets[0][i]);
-          end = 1;
+          continue;
         }
       }
       else
       {
         splitGameEnd(bets, dealerValue, i, splitHand, splitCheck, splitNumber);
         splitNumber += 2; 
-        end = 1;
+        continue;
       }
       printReceipt(bets, i, gameCount);
     }
