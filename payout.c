@@ -24,35 +24,35 @@ void splitGameEnd(float bets[2][MAX_PLAYERS], int dealerValue, int playerNumber,
         {
           printf("\n\nBlackjack for player %d, in hand %d! You win $%.2f", playerNumber+1, j, (bets[0][playerNumber] / 2) * 1.5);
           bets[1][playerNumber] = bets[1][playerNumber] + 1.5 * (bets[0][playerNumber] / 2);
-          end = 1;  
+          continue; 
         }
         else
         {
           printf("\n\nCongratulations player %d! Hand %d wins $%.2f", playerNumber+1, j, bets[0][playerNumber] / 2);
           bets[1][playerNumber] = bets[1][playerNumber] + bets[0][playerNumber];
-          end = 1;
+          continue;
         }
       }
       if (splitHand[i] == dealerValue)
       {
         printf("\n\nPush! Player 2, hand %d's bet of $%.2f is returned.", bets[0][playerNumber] / 2);
         bets[1][playerNumber] = bets[1][playerNumber] + bets[0][playerNumber] / 2;
-        end = 1;
+        continue;
       }  
       if (dealerValue > 21 && splitHand[i] <= 21)
       {
         printf("\n\nCongratulations player %d! Hand %d wins $%.2f", playerNumber+1, j, bets[0][playerNumber] / 2);
         bets[1][playerNumber] = bets[1][playerNumber] + bets[0][playerNumber];
-        end = 1;
+        continue;
       }
       if (splitHand[i] > 21)
       {
-        end = 1;
+        continue;
       }
       if (dealerValue > splitHand[i] && dealerValue <= 21)
       {
         printf("\n\nPlayer %d's hand %d looses. $%.2f lost.", playerNumber+1, bets[0][playerNumber] / 2);
-        end = 1;
+        continue;
       }
     }
   }
