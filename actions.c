@@ -3,32 +3,34 @@
 #include <time.h> 
 #include <string.h>
 /*
-   File : playerhand.c
    Author: Ben Kovach, Sophia Noriega
-   Assignment: Deck
-   Date: 03/21/2025
-   References:
 */
 
+// Doubling down: draws another card, doubles the players bet, and ends the turn
 int doubleDown(float bets[2][MAX_PLAYERS], struct deck Deck[], int playerNumber, int totalValue[])
 {
   int done;
-  if (bets[0][playerNumber] > bets[1][playerNumber])
+  
+  if (bets[0][playerNumber] > bets[1][playerNumber]) // Ensuring the player has enough money to split
   {
     printf("\nNot enough money to double down.");
     done = 0;
     return done;
   } 
-  drawRandom(Deck, playerNumber);
-  handValueCalculator(totalValue, Deck, playerNumber); 
-  bets[1][playerNumber] = bets[1][playerNumber] - bets[0][playerNumber];
-  bets[0][playerNumber] = bets[0][playerNumber] * 2;
-  int i;
-  int cardNumber = 1;
+  
+  drawRandom(Deck, playerNumber); // Drawing another card and calculating the new hand value
+  handValueCalculator(totalValue, Deck, playerNumber);
+  bets[1][playerNumber] = bets[1][playerNumber] - bets[0][playerNumber]; // Withdrawing from player's "account"
+  bets[0][playerNumber] = bets[0][playerNumber] * 2; // Doubling bet
+ 
   printf("Player %d doubles down!\n", playerNumber+1);
   printf("New Bet: $%.2f\n\n", bets[0][playerNumber]);
   printf("New Hand:\n");
-  for (i=0; i<52; i++)
+ 
+  int i;
+  int cardNumber = 1;
+	
+	for (i=0; i<52; i++)
   {
     if (Deck[i].playerDrawn == playerNumber)
     {
@@ -37,19 +39,22 @@ int doubleDown(float bets[2][MAX_PLAYERS], struct deck Deck[], int playerNumber,
     }
   }
   printf("\nNew hand value: %d", totalValue[playerNumber]);
+  // Returning a value to end the players turn in the while loop in playerOptions
   done = 1;
   return done;
 }
-  
+
+// Hit: draws another card and prints the players new hand 
 void hit(int totalValue[], struct deck Deck[], int playerNumber)
 {
   int cardNumber = 1;
   int i;
   drawRandom(Deck, playerNumber); // draws card
-  handValueCalculator(totalValue, Deck, playerNumber); //Calculates new hand value
+  handValueCalculator(totalValue, Deck, playerNumber); 
         
   printf("\nNew Hand:\n\n");
-  for (i=0; i<52; i++)
+  
+	for (i=0; i<52; i++)
   {
     if (playerNumber == Deck[i].playerDrawn)
     {
@@ -58,9 +63,10 @@ void hit(int totalValue[], struct deck Deck[], int playerNumber)
     } 
   }
   printf("New hand value: %d", totalValue[playerNumber]);
-  cardNumber = 1; // resetting card value for next player
+  cardNumber = 1; // resets card value for next player
 }
 
+// split: splits the hand into two
 int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[], float bets[2][MAX_PLAYERS], int splitNumber, int splitCheck[])
 {
   int over;
@@ -69,7 +75,8 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
   int i, choice, j, done;
   int check = 0;
   int cardNumber = 2;
-  // Finding the two cards in the player's hand
+  
+	// Finding the two cards in the player's hand
   for (i = 0; i < 52; i++) 
   {
     if (Deck[i].playerDrawn == playerNumber) 
@@ -94,28 +101,23 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
     over = 0;
     return over;
   }
-  if (bets[0][playerNumber] > bets[1][playerNumber])
+  
+	if (bets[0][playerNumber] > bets[1][playerNumber])
   {
     printf("\nNot enough money to split.");
     over = 0;
     return over;
   } 
-  // Resetting split hands (for calculating value if two players split)
-  for (i = 0; i < 6; i++) 
-  {
-    splitHand[i] = 0;
-  }
+  
   bets[1][playerNumber] = bets[1][playerNumber] - bets[0][playerNumber];
   bets[0][playerNumber] = bets[0][playerNumber] * 2;
   splitCheck[playerNumber] = 1;
-  // Setting initial values for hands
-  splitHand[splitNumber] = totalValue[playerNumber] / 2;
+  splitHand[splitNumber] = totalValue[playerNumber] / 2; // Setting initial values for hands
   splitHand[splitNumber + 1] = totalValue[playerNumber] / 2;
-  
-  ///////////////////////////totalValue[playerNumber] = splitNumber;
-  // Assigning one card to each split hand
+
   int firstCard = 1;
-  for (i = 0; i < 52; i++) 
+  
+  for (i = 0; i < 52; i++) // Assigning one card to each split hand
   {
     if (Deck[i].playerDrawn == playerNumber) 
     {
@@ -131,11 +133,12 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
       }
     }
   }
-  // printing initial split hand
-  for (i = splitNumber; i <= splitNumber + 1; i++) 
+  
+  for (i = splitNumber; i <= splitNumber + 1; i++) // printing initial split hand
   {
     done = 0;
-    while (done == 0) 
+    
+		while (done == 0) 
     {
       printf("\nHand %d:\nValue: %d\n", (i - 4), splitHand[i]);
       cardNumber = 1;
@@ -150,13 +153,14 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
       printf("Would you like to...\n");
       printf("1) Hit\n2) Stand\n");
       printf("Enter selection here: ");
-      scanf("%d", &choice);
-      if (scanf("%d", &choice) != 1) 
+      
+			if (scanf("%d", &choice) != 1) 
       {
         printf("Invalid input. Please enter 1 or 2.\n");
-        while (getchar() != '\n');
+        
+				while (getchar() != '\n');
         {
-        continue; // idk if thats right  - error check
+         continue; 
         }
       }
     
@@ -187,26 +191,31 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
       }
     }
   }
-  over = 1;
+  
+	over = 1;
   return over;
 }
    
+// Provides users with menu to hit, stand, double down, or split
 void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float bets[2][MAX_PLAYERS], int splitHand[], int splitCheck[])
 {
   int choice, i; 
   int done = 0;
   int splitNumber = 5;
-  while (done == 0)
+  
+	while (done == 0)
   {
     int check = 0;
-    if (totalValue[playerNumber] > 21)
+    
+		if (totalValue[playerNumber] > 21)
     {
       done = 1;
     }
     printf("\n\nWould you like to...");
     printf("\n\n1) Hit\n2) Stand\n3) Double Down\n4) Split");
     printf("\nEnter your selection: ");    
-    while (check != 1)
+    
+		while (check != 1)
     {
       if (scanf("%d", &choice) != 1)
       { 
@@ -222,7 +231,8 @@ void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float b
         check = 1; 
       } 
     }
-    switch (choice)
+   
+	  switch (choice)
     {
       case 1: // hit
         hit(totalValue, Deck, playerNumber);
@@ -250,16 +260,19 @@ void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float b
     printf("\n\nPlayer %d has busted. You lose $%.2f", playerNumber + 1, bets[0][playerNumber]);
   }
 }
-      
+
+// Prints the intial cards for each player and the hand value
 void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float bets[2][MAX_PLAYERS], int splitHand[], int splitCheck[])
 {
   int i, j;
   int cardNumber = 1;
-  for (i=0; i<playerCount; i++)
+  
+	for (i=0; i<playerCount; i++)
   {
     printf("\nDealing player %d's cards!\n", i + 1);
     sleep(2);
-    for (j=0; j<52; j++)
+    
+		for (j=0; j<52; j++)
     {
       if (i == Deck[j].playerDrawn)
       {
