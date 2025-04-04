@@ -10,6 +10,13 @@ Etc etc
 Once started: 
 Steps:
 
+Add files to ,,,
+Enter the directory
+
+Make 
+etc
+
+
 GIVE STEP BY STEP AS RUNNING THROUGH PROGRAM 
 1.
 2. 
