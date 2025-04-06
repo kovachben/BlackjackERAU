@@ -9,22 +9,6 @@ HOW TO DOWNLOAD AND START
 - Run make file by typing "make"
 - Type the executable "Blackjack" and the program starts
 
-Once started: 
-Steps:
-
-Add files to ,,,
-Enter the directory
-
-Make 
-etc
-
-
-While running through program:  
-1.
-2. 
-3. etc 
-
-
 Gameplay Rules: 
 
 Goal: 
