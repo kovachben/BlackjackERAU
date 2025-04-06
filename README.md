@@ -2,6 +2,8 @@
 CS125 Group Project
 
 HOW TO DOWNLOAD AND START
+- Download ERAU_BLACKJACK Zip File or download the following files directly from the repository:
+  - blackjack.h; game.c; actions.c; dealer.c; deck.c; payout.c; Makefile; receipt.txt
 - UNZIP ERAU_BLACKJACK Zip File
 - Download all files in the folder
 - Create a new directory for the game and enter it
