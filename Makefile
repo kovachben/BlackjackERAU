@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = 
 TARGET_FILES = actions.c dealer.c deck.c payout.c playerhand.c game.c
 OBJECTS = $(TARGET_FILES:.c=.o)
-EXEC = program
+EXEC = Blackjack
 
 .PHONY: all clean
 
