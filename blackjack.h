@@ -1,13 +1,8 @@
 #ifndef BLACKJACK_H
 #define BLACKJACK_H
-
 #define MAX_PLAYERS 4
 /*
-   File : dealer.c
    Author: Ben Kovach
-   Assignment: dealer
-   Date: 03/24/2025
-   References:
 */
 
 struct deck
@@ -35,7 +30,7 @@ void dealerAction(struct deck Deck[], int dealerValue);
 
 void placeBets(float bets[2][MAX_PLAYERS], int playerCount);
 
-void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[], int gameCount);
+void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[], int gameCount, struct deck Deck[]);
 
 int nextGame(int gameCount, float bets[2][MAX_PLAYERS], int playerCount);
 
