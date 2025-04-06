@@ -9,6 +9,7 @@ HOW TO DOWNLOAD AND START
 - Rename Makefile.txt to just Makefile
 - Run make file by typing "make"
 - Type the executable "Blackjack" and the program begins
+- Between each run type "make clean" to remove the executable files from the directory
 
 Gameplay Rules: 
 
