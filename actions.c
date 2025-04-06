@@ -159,13 +159,15 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
     }
   }
   
+  int handNumber = 0;
+  
   for (i = splitNumber; i <= splitNumber + 1; i++) // printing initial split hand
   {
     done = 0;
-    
+    handNumber++;
 		while (done == 0) 
     {
-      printf("\nHand %d:\nValue: %d\n", (i - 4), splitHand[i]);
+      printf("\nHand %d:\nValue: %d\n", handNumber, splitHand[i]);
       cardNumber = 1;
       
       for (j = 0; j < 52; j++) 
