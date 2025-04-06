@@ -1,11 +1,13 @@
 # BlackjackERAU
 CS125 Group Project
 
-NEED HOW TO START AND DOWNLOAD
-- UNZIP FILE
-Etc etc
-- HOW TO COMPILE
-
+HOW TO DOWNLOAD AND START
+- UNZIP ERAU_BLACKJACK Zip File
+- Download all files in the folder
+- Create a new directory for the game and enter it
+- Upload downloaded files into the new directory
+- Run make file by typing "make"
+- Type the executable "Blackjack" and the program starts
 
 Once started: 
 Steps:
@@ -27,7 +29,7 @@ Gameplay Rules:
 
 Goal: 
 - Have a hand value closer to 21 than the dealer's hand without going over 21. 
-- If your hand goes over 21, you lose automatically (ìBustî).
+- If your hand goes over 21, you lose automatically (‚ÄúBust‚Äù).
 
 Dealing: Each player and the dealer get two cards.
 - Players' cards are face-up.
@@ -41,8 +43,8 @@ Player's Turn: Perform an action.
 
 Dealer's Turn: 
 - Once all players finish their turn, the dealer reveals the face down card.
-- The dealer must hit if their hand is below 17 and must stand if itís above 17.
-- If the dealer ìbusts,î all remaining players win.
+- The dealer must hit if their hand is below 17 and must stand if it‚Äôs above 17.
+- If the dealer ‚Äúbusts,‚Äù all remaining players win.
 
 Card Values: 
 - Number cards (2-10): Face value (a 3 is worth 3 points).
