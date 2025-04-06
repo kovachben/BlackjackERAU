@@ -42,24 +42,24 @@ int main()
     } 
   }
  
-  initializeMoney(bets, playerCount);
+  initializeMoney(bets, playerCount); // playerhand
   int gameStatus = 1;
   
 	// General game flow
 	while (gameStatus == 1)
   {
-    dealerBlackjack = resetGame(splitCheck, splitHand, playerCount, dealerBlackjack);
+    dealerBlackjack = resetGame(splitCheck, splitHand, playerCount, dealerBlackjack); // playerhand
     gameCount++;
-    placeBets(bets, playerCount);
-    fillDeck(Deck);
-    dealerInitial(Deck);
-    drawInitial(Deck, playerCount);
-    handValueCalculatorAll(totalValue, Deck, playerCount);
-    playerPrompt(totalValue, playerCount, Deck, bets, splitHand, splitCheck);
-    dealerBlackjack = dealerAction(Deck, dealerValue, dealerBlackjack);
-    dealerValue = dealerCalculator(Deck, dealerValue);
-    gameEnd(totalValue, bets, dealerValue, playerCount, splitHand, splitCheck, gameCount, Deck, dealerBlackjack);
-    gameStatus = nextGame(gameCount, bets, playerCount);
+    placeBets(bets, playerCount); // playerhand
+    fillDeck(Deck); // deck
+    dealerInitial(Deck); // dealer
+    drawInitial(Deck, playerCount); // deck
+    handValueCalculatorAll(totalValue, Deck, playerCount); // playerhand
+    playerPrompt(totalValue, playerCount, Deck, bets, splitHand, splitCheck); // playerhand
+    dealerBlackjack = dealerAction(Deck, dealerValue, dealerBlackjack); // dealer
+    dealerValue = dealerCalculator(Deck, dealerValue); // dealer
+    gameEnd(totalValue, bets, dealerValue, playerCount, splitHand, splitCheck, gameCount, Deck, dealerBlackjack); // payout
+    gameStatus = nextGame(gameCount, bets, playerCount); // payout
   }
   
 	return 0;

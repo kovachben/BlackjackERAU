@@ -59,8 +59,9 @@ void initializeMoney(float bets[2][4], int playerCount)
   
   for (i=0; i<playerCount; i++)
   {
-    bets[0][i] = 0;
-    bets[1][i] = 0;
+    // to avoid errors while incrementing
+    bets[0][i] = 0; // live row
+    bets[1][i] = 0; // total account value
   }
   
   for (i=0; i<playerCount; i++)

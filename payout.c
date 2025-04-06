@@ -21,7 +21,7 @@ void splitGameEnd(float bets[2][MAX_PLAYERS], int dealerValue, int playerNumber,
       continue;
     }
     
-    if (splitHand[i] == dealerValue)
+    if (splitHand[i] == dealerValue && splitHand[i] < 21)
     {
      	 printf("\n\nPush! Player %d, hand %d's bet of $%.2f is returned.", playerNumber + 1, j, bets[0][playerNumber] / 2);
        bets[1][playerNumber] = bets[1][playerNumber] + bets[0][playerNumber] / 2;
@@ -114,7 +114,7 @@ void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int 
         }
       }
       
-      if (totalValue[i] == dealerValue)
+      if (totalValue[i] == dealerValue && totalValue[i] < 21)
       {
     	   printf("\n\nPush for player %d! Your bet of $%.2f is returned.", i+1, bets[0][i]);
          bets[1][i] = bets[1][i] + bets[0][i];
@@ -139,7 +139,6 @@ void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int 
         continue;
       }
     }
-    
     else
     {
       splitGameEnd(bets, dealerValue, i, splitHand, splitCheck, splitNumber);

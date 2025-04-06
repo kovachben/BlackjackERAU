@@ -75,7 +75,7 @@ int dealerAction(struct deck Deck[], int dealerValue, int dealerBlackjack)
   if (dealerValue == 21)
   {
     printf("\n\nBlackjack for the dealer!");
-    dealerBlackjack = 0;
+    dealerBlackjack = 1;
     return dealerBlackjack;
   }
   
