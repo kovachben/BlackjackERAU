@@ -16,19 +16,9 @@ int main()
   int splitHand[12]; // Size allows all players to split
   int splitCheck[MAX_PLAYERS];
   int check = 0; 
-  
-	// Initializing variables to zero to avoid errors when incrementing
-	for (i=0; i<MAX_PLAYERS; i++)
-  {
-    splitCheck[i] = 0;
-  }
-  
-	for (i = 0; i < 12; i++) 
-  {
-    splitHand[i] = 0;
-  }
- 
   int gameCount = 0;
+  int dealerBlackjack;
+  
   printf("|----- Welcome to Blackjack -----|");
   printf("\n\n\nHow many players are there (1-4)?");
   printf("\nEnter number here: ");
@@ -58,6 +48,7 @@ int main()
 	// General game flow
 	while (gameStatus == 1)
   {
+    dealerBlackjack = resetGame(splitCheck, splitHand, playerCount, dealerBlackjack);
     gameCount++;
     placeBets(bets, playerCount);
     fillDeck(Deck);
@@ -65,17 +56,11 @@ int main()
     drawInitial(Deck, playerCount);
     handValueCalculatorAll(totalValue, Deck, playerCount);
     playerPrompt(totalValue, playerCount, Deck, bets, splitHand, splitCheck);
-    dealerAction(Deck, dealerValue);
+    dealerBlackjack = dealerAction(Deck, dealerValue, dealerBlackjack);
     dealerValue = dealerCalculator(Deck, dealerValue);
-    gameEnd(totalValue, bets, dealerValue, playerCount, splitHand, splitCheck, gameCount, Deck);
+    gameEnd(totalValue, bets, dealerValue, playerCount, splitHand, splitCheck, gameCount, Deck, dealerBlackjack);
     gameStatus = nextGame(gameCount, bets, playerCount);
   }
   
 	return 0;
 }
-
-    
-  
-    
-  
-  

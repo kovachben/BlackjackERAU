@@ -129,9 +129,16 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
   bets[1][playerNumber] = bets[1][playerNumber] - bets[0][playerNumber];
   bets[0][playerNumber] = bets[0][playerNumber] * 2;
   splitCheck[playerNumber] = 1;
-  splitHand[splitNumber] = totalValue[playerNumber] / 2; // Setting initial values for hands
-  splitHand[splitNumber + 1] = totalValue[playerNumber] / 2;
-
+  
+  for (i = 0; i < 52; i++) // Assigning an initial value to each hand
+  {
+    if (Deck[i].playerDrawn == playerNumber)
+    {
+      splitHand[splitNumber] = Deck[i].handValue;
+      splitHand[splitNumber + 1] = Deck[i].handValue;
+    }
+  }
+  
   int firstCard = 1;
   
   for (i = 0; i < 52; i++) // Assigning one card to each split hand
@@ -200,7 +207,7 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
             
             if (splitHand[i] > 21) 
             {
-              printf("Player %d, hand %d has busted! Value: %d\n", playerNumber+1, i - 3, splitHand[i]);
+              printf("Player %d, hand %d has busted! Value: %d\n", playerNumber+1, i - 4, splitHand[i]);
               done = 1;
             }
             
@@ -220,15 +227,14 @@ int split(int playerNumber, int totalValue[], struct deck Deck[], int splitHand[
 }
    
 // Provides users with menu to hit, stand, double down, or split
-void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float bets[2][MAX_PLAYERS], int splitHand[], int splitCheck[])
+int playOptions(int playerNumber, int totalValue[], struct deck Deck[], float bets[2][MAX_PLAYERS], int splitHand[], int splitCheck[], int splitNumber)
 {
   int choice, i; 
   int done = 0;
-  int splitNumber = 5;
   
   if (totalValue[playerNumber] == 21)
   {
-    printf("Blackjack for player %d!!!", playerNumber + 1);
+    printf("\n\nBlackjack for player %d!!!\n\n", playerNumber + 1);
     return;
   }
   
@@ -288,9 +294,9 @@ void playOptions(int playerNumber, int totalValue[], struct deck Deck[], float b
   
   if (totalValue[playerNumber] > 21)
   {
-    printf("\n\nPlayer %d has busted. You lose $%.2f", playerNumber + 1, bets[0][playerNumber]);
+    printf("\n\nPlayer %d has busted. You lose $%.2f\n\n", playerNumber + 1, bets[0][playerNumber]);
   }
-  
+  return splitNumber;
 }
 
 // Prints the intial cards for each player and the hand value
@@ -298,7 +304,7 @@ void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float b
 {
   int i, j;
   int cardNumber = 1;
-  
+  int splitNumber = 5;
 	for (i=0; i<playerCount; i++)
   {
     printf("\nDealing player %d's cards!\n", i + 1);
@@ -314,6 +320,6 @@ void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float b
     }
     cardNumber = 1;  
     printf("\nTotal hand value: %d\n", totalValue[i]);
-    playOptions(i, totalValue, Deck, bets, splitHand, splitCheck);
+    splitNumber = playOptions(i, totalValue, Deck, bets, splitHand, splitCheck, splitNumber);
   }
 }

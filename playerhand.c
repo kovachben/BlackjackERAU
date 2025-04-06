@@ -128,3 +128,20 @@ void placeBets(float bets[2][MAX_PLAYERS], int playerCount)
     }
   }
 }
+// Resets values of split functions every game to avoid carry over and errors when incrementing
+int resetGame(int splitCheck[], int splitHand[], int playerCount, int dealerBlackjack)
+{
+  int i;
+  
+  for (i = 0; i < playerCount; i++)
+  {
+    splitCheck[i] = 0;
+  }
+  
+  for (i = 0; i < 12; i++)
+  {
+    splitHand[i] = 0;
+  }
+  dealerBlackjack = 0;
+  return dealerBlackjack;
+}

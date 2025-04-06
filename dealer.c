@@ -47,7 +47,7 @@ int dealerCalculator(struct deck Deck[], int dealerValue)
 }
 
 // Contains logic for if the dealer hits or stands
-void dealerAction(struct deck Deck[], int dealerValue)
+int dealerAction(struct deck Deck[], int dealerValue, int dealerBlackjack)
 {
   int i, done;
   printf("\n\nDealer's Hand:\n\n");
@@ -72,12 +72,20 @@ void dealerAction(struct deck Deck[], int dealerValue)
   printf("Hand Value: %d", dealerValue);
   int cardAssignment = 22;
   
+  if (dealerValue == 21)
+  {
+    printf("\n\nBlackjack for the dealer!");
+    dealerBlackjack = 0;
+    return dealerBlackjack;
+  }
+  
   while (dealerValue < 17)
   {
       cardAssignment = dealerHit(Deck, dealerValue, cardAssignment);
       dealerValue = dealerCalculator(Deck, dealerValue);
   }
-  
+  dealerBlackjack = 0;
+  return dealerBlackjack;
 }
 
 // Hits for the dealer

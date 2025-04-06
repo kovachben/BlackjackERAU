@@ -14,7 +14,6 @@ void splitGameEnd(float bets[2][MAX_PLAYERS], int dealerValue, int playerNumber,
   for (i=splitNumber; i<splitNumber+2; i++)
   {
     j++;
-    
     if (splitHand[i] > dealerValue && splitHand[i] <= 21 || dealerValue > 21 && splitHand[i] == 21)
     {
       printf("\n\nCongratulations player %d! Hand %d wins $%.2f", playerNumber+1, j, bets[0][playerNumber] / 2);
@@ -24,7 +23,7 @@ void splitGameEnd(float bets[2][MAX_PLAYERS], int dealerValue, int playerNumber,
     
     if (splitHand[i] == dealerValue)
     {
-     	 printf("\n\nPush! Player 2, hand %d's bet of $%.2f is returned.", bets[0][playerNumber] / 2);
+     	 printf("\n\nPush! Player %d, hand %d's bet of $%.2f is returned.", playerNumber + 1, j, bets[0][playerNumber] / 2);
        bets[1][playerNumber] = bets[1][playerNumber] + bets[0][playerNumber] / 2;
        continue;
     }  
@@ -80,26 +79,28 @@ void printReceipt(float bets[2][MAX_PLAYERS], int playerNumber, int gameCount)
 }
 
 // Determines if a player wins, looses, or pushes
-void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[], int gameCount, struct deck Deck[])
+void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[], int gameCount, struct deck Deck[], int dealerBlackJack)
 {
   int i, j;
   int splitNumber = 5;
-  int cardCount = 0;
+  int cardCount;
   
   for (i=0; i<playerCount; i++)
   {
+    cardCount = 0;
+    
     for (j = 0; j < 52; j++)
     {
       if (Deck[j].playerDrawn == i)
       {
-      cardCount++;
+        cardCount++;
       }
     }
 		if (splitCheck[i] == 0)
     {
       if (totalValue[i] > dealerValue && totalValue[i] <= 21 || dealerValue > 21 && totalValue[i] == 21)
       {
-    		if (totalValue[i] == 21 && cardCount == 2)
+    		if (totalValue[i] == 21 && cardCount == 2 && dealerBlackJack != 1)
 	 		  {
     	     printf("\n\nBlackjack for player %d! You win $%.2f", i+1, bets[0][i] * 1.5);
 					 bets[1][i] = bets[1][i] + bets[0][i] + 1.5 * bets[0][i]; 
@@ -115,7 +116,7 @@ void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int 
       
       if (totalValue[i] == dealerValue)
       {
-    	   printf("\n\nPush! Your bet of $%.2f is returned.", bets[0][i]);
+    	   printf("\n\nPush for player %d! Your bet of $%.2f is returned.", i+1, bets[0][i]);
          bets[1][i] = bets[1][i] + bets[0][i];
          continue;
       }

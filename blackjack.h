@@ -26,11 +26,11 @@ void playerPrompt(int totalValue[], int playerCount, struct deck Deck[], float b
 
 void dealerInitial(struct deck Deck[]);
 
-void dealerAction(struct deck Deck[], int dealerValue);
+int dealerAction(struct deck Deck[], int dealerValue, int dealerBlackjack);
 
 void placeBets(float bets[2][MAX_PLAYERS], int playerCount);
 
-void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[], int gameCount, struct deck Deck[]);
+void gameEnd(int totalValue[], float bets[2][MAX_PLAYERS], int dealerValue, int playerCount, int splitHand[], int splitCheck[], int gameCount, struct deck Deck[], int dealerBlackjack);
 
 int nextGame(int gameCount, float bets[2][MAX_PLAYERS], int playerCount);
 
