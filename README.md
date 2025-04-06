@@ -3,13 +3,12 @@ CS125 Group Project
 
 HOW TO DOWNLOAD AND START
 - Download ERAU_BLACKJACK Zip File or download the following files directly from the repository:
-  - blackjack.h; game.c; actions.c; dealer.c; deck.c; payout.c; playerhand.c; Makefile; receipt.txt
-- UNZIP ERAU_BLACKJACK Zip File
-- Download all files in the folder
+  - blackjack.h; game.c; actions.c; dealer.c; deck.c; payout.c; playerhand.c; Makefile.txt; receipt.txt
 - Create a new directory for the game and enter it
 - Upload downloaded files into the new directory
+- Rename Makefile.txt to just Makefile
 - Run make file by typing "make"
-- Type the executable "Blackjack" and the program starts
+- Type the executable "Blackjack" and the program begins
 
 Gameplay Rules: 
 
